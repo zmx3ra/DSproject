@@ -1,0 +1,32 @@
+1. Basic Information about the Dataset
+The dataset name is, “Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates and Quality Ratings for CA Hospitals.” We got it from Data.gov, which is a reputable source to pull data from. The hyperlink to the dataset is as follows: Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates and Quality Ratings for CA Hospitals - Catalog. The purpose of this dataset is to show risk-adjusted 30 day mortality and readmission rates, as well as quality ratings and deaths/readmissions, for Ischemic Strokes treated in hospitals in California. This dataset is important as it shows how hospital ratings are related to stroke readmissions and deaths: and a possible correlation could demonstrate the need for hospitals to increase their ratings in order to lower readmission or death rates. 
+
+
+
+2. Variables / Features
+We are investigating a rich dataset with 9 variables: 5 numeric variables, and 4 categorical variables. We cleaned the data to subset the five most populated counties in California. The variables are listed as follows:
+Year (quantitative discrete, year that the data was recorded)
+County (categorical, the county the data was recorded in)
+Hospital (categorical, the hospital the data was recorded in)
+OSHPDID (categorical, hospital ID, not important for research question)
+Risk Adjusted Rate (quantitative continuous (float), it is the risk rate adjusted to account for variables such as age and health severity for readmissions and deaths)
+# of Deaths/Readmissions (quantitative continuous (float), it is the number of deaths/readmissions in that hospital for that year)
+# of Cases (quantitative continuous (float), it is the number of hospital cases)
+Hospital Ratings (categorical, how patients rated the hospital)
+Location (quantitative (float), location coordinates)
+
+
+
+3. Size and Shape of the Data
+The size and the shape of the data is 1,026 observations with 9 columns.
+
+4. Data Quality Notes
+The data did contain some missing values, but they were already replaced with np.Nan so we did not need to perform any more cleaning on that. However, we did have a few cleaning points we did, such as coercing columns with periods to numeric as a precaution, and removing unnecessary wording in some of the columns. In addition, our year column was 2011-2012 instead of just 2011, so we performed a str.split() function to change this issue. This would make it easier for data visualization. Otherwise, we did not have any unnecessary dollar signs or commas. The original data we were working with was quite large, so we decided to subset the 5 most populated counties in California, making it a much more manageable dataset. We removed the column location as it was not necessary to have the exact coordinates. 
+There are some outliers in the dataset. I ran boxplots on the three numeric variables (risk adjusted rate, number of cases, and number of deaths/readmissions and all of the data was right skewed. In our next section, we will need to investigate transformations to fix our data and curb the number of outliers. 
+
+
+
+5. Context and Relevance
+Our project/goal is to investigate how year and county relate to risk adjusted rate/deaths/readmissions/case count. Additionally, we want to investigate the relationship between hospital ratings and these numeric variables. This is extremely relevant because health is very important. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases and deaths/readmissions, would help policy makers comprehend which hospitals to improve, and how they can better patient care. 
+
+
