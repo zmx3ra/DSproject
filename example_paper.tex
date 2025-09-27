@@ -102,7 +102,7 @@
 %\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
 \begin{abstract}
-This paper examines the relationship between Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates, Hospital Quality Ratings, and Location. (More will be added after data description)
+This paper examines the relationship between Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates, Hospital Quality Ratings, and Location. (More will be added after data description) (Rachel Kersey)
 \end{abstract}
 
 \section{Data Description}
@@ -126,7 +126,7 @@ We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. W
 \item Number of Deaths/Readmissions: quantitative continuous (float), number of deaths/readmissions for hospital that year.
 \item Number of Cases: quantitative continuous (float), number of hospital cases
 \item Hospital Ratings: categorical, patient hospital rating.
-\item Location: quantitative (float), hospital location coordinates.
+\item Location: quantitative (float), hospital location coordinates. (Rachel Kersey)
 %\item Keep your abstract brief and self-contained, one paragraph and roughly
 %    4--6 sentences. Gross violations will require correction at the
 %    camera-ready phase. The title should have content words capitalized.
@@ -134,7 +134,7 @@ We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. W
 
 %\subsection{Data Dimensions}
 
-\textbf{Data Dimensions} The size and the shape of the data is 1,026 observations with 9 columns.
+\textbf{Data Dimensions} The size and the shape of the data is 1,026 observations with 9 columns. (Helen Sparling)
 
 \medskip
 
@@ -166,16 +166,16 @@ We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. W
 %results. This program avoids the Type-3 font problem, and supports more
 %advanced features in the \texttt{microtype} package.
 
-\textbf{Data Quality Notes:} The data had missing values. They were replaced with np.Nan so no additional cleaning was needed. Data cleaning included: coercing columns with periods to numeric as a precaution, removing unnecessary wording, splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric. These changes will make data visualization simpler. There were no unnecessary dollar signs, commas, or other characters. The original data set was quite large, so the 5 most populated counties were subsetted to make the dataset mroe manageable for analysis. The location column was removed because it was not necessary to answer the research question. 
+\textbf{Data Quality Notes:} The data had missing values. They were replaced with np.Nan so no additional cleaning was needed. Data cleaning included: coercing columns with periods to numeric as a precaution, removing unnecessary wording, splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric. These changes will make data visualization simpler. There were no unnecessary dollar signs, commas, or other characters. The original data set was quite large, so the 5 most populated counties were subsetted to make the dataset mroe manageable for analysis. The location column was removed because it was not necessary to answer the research question. (Helen Sparling)
 
 
-There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to fix the data and curb the number of outliers. 
+There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to fix the data and curb the number of outliers. (Rachel Kersey)
 
 
 
 \subsection{Context and Relevance}
 
-Our project/goal is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmissions, and case count. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and readmissions, would help policy makers identify hospitals in need of imporovement, and provide recommendations of how to improve patient care.
+Our project/goal is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmissions, and case count. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and readmissions, would help policy makers identify hospitals in need of imporovement, and provide recommendations of how to improve patient care. (Helen and Rachel)
 
 
 
