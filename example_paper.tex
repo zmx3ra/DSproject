@@ -166,7 +166,7 @@ We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. W
 %results. This program avoids the Type-3 font problem, and supports more
 %advanced features in the \texttt{microtype} package.
 
-\textbf{Data Quality Notes:} The data had missing values. They were replaced with np.Nan so no additional cleaning was needed. Data cleaning included: coercing columns with periods to numeric as a precaution, removing unnecessary wording, splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric. These changes will make data visualization simpler. There were no unnecessary dollar signs, commas, or other characters. The original data set was quite large, so the 5 most populated counties were subsetted to make the dataset mroe manageable for analysis. The location column was removed because it was not necessary to answer the research question. (Helen Sparling)
+\textbf{Data Quality Notes:} The data had missing values. They were replaced with np.Nan so no additional cleaning was needed. Data cleaning included: coercing columns with periods to numeric as a precaution, removing unnecessary wording, splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric. These changes will make data visualization simpler. There were no unnecessary dollar signs, commas, or other characters. The original data set was quite large, so the 5 most populated counties were subsetted to make the dataset more manageable for analysis. The location column was removed because it was not necessary to answer the research question. (Helen Sparling)
 
 
 There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to fix the data and curb the number of outliers. (Rachel Kersey)
@@ -175,15 +175,15 @@ There are some outliers in the dataset. Boxplots were made for the three numeric
 
 \subsection{Context and Relevance}
 
-Our project/goal is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmissions, and case count. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and readmissions, would help policy makers identify hospitals in need of imporovement, and provide recommendations of how to improve patient care. (Helen and Rachel)
+Our project/goal is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmissions, and case count. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and re admissions, would help policy makers identify hospitals in need of improvement, and provide recommendations of how to improve patient care. (Helen and Rachel)
 
 
 
-\section{Format of the Paper}
+\section{Pre-Analysis}
 
 All submissions must follow the specified format.
 
-\subsection{Dimensions}
+\subsection{Refined Research Question}
 
 
 
@@ -199,7 +199,7 @@ Do not write anything on the margins.
 The paper body should be set in 10~point type with a vertical spacing
 of 11~points. Please use Times typeface throughout the text.
 
-\subsection{Title}
+\subsection{Data Splitting Plan}
 
 The paper title should be set in 14~point bold type and centered
 between two horizontal rules that are 1~point thick, with 1.0~inch
@@ -207,76 +207,22 @@ between the top rule and the top edge of the page. Capitalize the
 first letter of content words and put the rest of the title in lower
 case.
 
-\subsection{Author Information for Submission}
+\subsection{Feature Selection}
 \label{author info}
 
-ICML uses double-blind review, so author information must not appear. If
-you are using \LaTeX\/ and the \texttt{icml2025.sty} file, use
-\verb+\icmlauthor{...}+ to specify authors and \verb+\icmlaffiliation{...}+ to specify affiliations. (Read the TeX code used to produce this document for an example usage.) The author information
-will not be printed unless \texttt{accepted} is passed as an argument to the
-style file.
-Submissions that include the author information will not
-be reviewed.
+Before running any machine learning, certain variables must be one hot encoded so as to turn a categorical variable into a binary. Variables that were one hot encoded included hospital ratings (where options included worse, as expected, and better) and measure (where options included readmission and mortality). Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
 
-\subsubsection{Self-Citations}
+Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location, year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable.  
 
-If you are citing published papers for which you are an author, refer
-to yourself in the third person. In particular, do not use phrases
-that reveal your identity (e.g., ``in previous work \cite{langley00}, we
-have shown \ldots'').
+\subsection{Model Selection Plan}
 
-Do not anonymize citations in the reference section. The only exception are manuscripts that are
-not yet published (e.g., under submission). If you choose to refer to
-such unpublished manuscripts \cite{anonymous}, anonymized copies have
-to be submitted
-as Supplementary Material via OpenReview\@. However, keep in mind that an ICML
-paper should be self contained and should contain sufficient detail
-for the reviewers to evaluate the work. In particular, reviewers are
-not required to look at the Supplementary Material when writing their
-review (they are not required to look at more than the first $8$ pages of the submitted document).
+We used a classification model for addressing objective 1 because the predicted variable is categorical. We will use a linear regression model for objective 2 because the predicted variable is numeric. 
 
-\subsubsection{Camera-Ready Author Information}
-\label{final author}
+Specifically for objective 1, a logistic regression model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors so long as they are one-hot encoded (which was done previously). 
 
-If a paper is accepted, a final camera-ready copy must be prepared.
-%
-For camera-ready papers, author information should start 0.3~inches below the
-bottom rule surrounding the title. The authors' names should appear in 10~point
-bold type, in a row, separated by white space, and centered. Author names should
-not be broken across lines. Unbolded superscripted numbers, starting 1, should
-be used to refer to affiliations.
+Tree based models will be used for objective 2. This will be helpful for making a model with mixed data types (numeric and categorical) without first one-hot encoding. 
 
-Affiliations should be numbered in the order of appearance. A single footnote
-block of text should be used to list all the affiliations. (Academic
-affiliations should list Department, University, City, State/Region, Country.
-Similarly for industrial affiliations.)
-
-Each distinct affiliations should be listed once. If an author has multiple
-affiliations, multiple superscripts should be placed after the name, separated
-by thin spaces. If the authors would like to highlight equal contribution by
-multiple first authors, those authors should have an asterisk placed after their
-name in superscript, and the term ``\textsuperscript{*}Equal contribution"
-should be placed in the footnote block ahead of the list of affiliations. A
-list of corresponding authors and their emails (in the format Full Name
-\textless{}email@domain.com\textgreater{}) can follow the list of affiliations.
-Ideally only one or two names should be listed.
-
-A sample file with author names is included in the ICML2025 style file
-package. Turn on the \texttt{[accepted]} option to the stylefile to
-see the names rendered. All of the guidelines above are implemented
-by the \LaTeX\ style file.
-
-\subsection{Abstract}
-
-The paper abstract should begin in the left column, 0.4~inches below the final
-address. The heading `Abstract' should be centered, bold, and in 11~point type.
-The abstract body should use 10~point type, with a vertical spacing of
-11~points, and should be indented 0.25~inches more than normal on left-hand and
-right-hand margins. Insert 0.4~inches of blank space after the body. Keep your
-abstract brief and self-contained, limiting it to one paragraph and roughly 4--6
-sentences. Gross violations will require correction at the camera-ready phase.
-
-\subsection{Partitioning the Text}
+\subsection{Evaluation Strategy}
 
 You should organize your paper into sections and paragraphs to help
 readers place a structure on the material and understand its
