@@ -181,52 +181,37 @@ Our project/goal is to investigate the relationships between year and county and
 
 \section{Pre-Analysis}
 
-All submissions must follow the specified format.
+The following sections outline our pre-analysis plan for our dataset.
 
 \subsection{Refined Research Question}
 
 
+We first reviewed some associations in our data utilizing barplots, as well as a correlation matrix. We did not find high correlation between any of the numeric variables. 
 
-
-The text of the paper should be formatted in two columns, with an
-overall width of 6.75~inches, height of 9.0~inches, and 0.25~inches
-between the columns. The left margin should be 0.75~inches and the top
-margin 1.0~inch (2.54~cm). The right and bottom margins will depend on
-whether you print on US letter or A4 paper, but all final versions
-must be produced for US letter size.
-Do not write anything on the margins.
-
-The paper body should be set in 10~point type with a vertical spacing
-of 11~points. Please use Times typeface throughout the text.
+After reviewing some associations in our data, we found indicators that there is a relationship between hospital ratings and risk adjusted rate, number of cases, and number of deaths/readmissions. Thus, this led us to refine our research question: Predict hospital rating (“as expected”, “worse”, “better”) from hospital location, year, risk adjusted rate, deaths, readmissions, and case count. This question allows us to explore with Machine Learning methods we have used in class. (Rachel)
 
 \subsection{Data Splitting Plan}
 
-The paper title should be set in 14~point bold type and centered
-between two horizontal rules that are 1~point thick, with 1.0~inch
-between the top rule and the top edge of the page. Capitalize the
-first letter of content words and put the rest of the title in lower
-case.
+For our data splitting, we plan to utilize an 80/20 train test split through a def(maxmin) function, creating target and feature variables, and using the "from sklearn.model selection import train test split." (Rachel)
 
 \subsection{Feature Selection}
 \label{author info}
 
-Before running any machine learning, certain variables must be one hot encoded so as to turn a categorical variable into a binary. Variables that were one hot encoded included hospital ratings (where options included worse, as expected, and better) and measure (where options included readmission and mortality). Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
+Before running any machine learning, certain variables were one-hot encoded. Variables that were one-hot encoded included County and measure (mortality or readmission). We did not one-hot encode by hospital due to the large number of different hospitals. County was a more reasonable location-based variable to one-hot encode. Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
 
-Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location, year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable.  
+Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location (County), year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable instead of hospital ratings.  
 
 \subsection{Model Selection Plan}
 
-We used a classification model for addressing objective 1 because the predicted variable is categorical. We will use a linear regression model for objective 2 because the predicted variable is numeric. 
+We will use a classification model for addressing objective 1 because the predicted variable is categorical. We will use a linear regression model for objective 2 because the predicted variable is numeric. 
 
-Specifically for objective 1, a logistic regression model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors so long as they are one-hot encoded (which was done previously). 
+Specifically for objective 1, a logistic regression model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors, so long as they are one-hot encoded (which was done previously). 
 
-Tree based models will be used for objective 2. This will be helpful for making a model with mixed data types (numeric and categorical) without first one-hot encoding. 
+Tree based models will be used for objective 2. This will be helpful in making a model with mixed data types (numeric and categorical) without first hot encoding. 
 
 \subsection{Evaluation Strategy}
 
-You should organize your paper into sections and paragraphs to help
-readers place a structure on the material and understand its
-contributions.
+For our evaluation strategy, we plan to use accuracy and precision to evaluate how well our model does. This entails using "from sklearn import tree", making a decision classifier and fitting the classifier, making predictions on the test set, then completing a confusion matrix with an accuracy formula. (Rachel)
 
 \subsubsection{Sections and Subsections}
 
