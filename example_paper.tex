@@ -199,7 +199,7 @@ For our data splitting, we plan to utilize an 80/20 train test split through a d
 
 Before running any machine learning, certain variables were one-hot encoded. Variables that were one-hot encoded included County and measure (mortality or readmission). We did not one-hot encode by hospital due to the large number of different hospitals. County was a more reasonable location-based variable to one-hot encode. Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
 
-Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location (County), year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable instead of hospital ratings.  
+Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location (County), year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable instead of hospital ratings. (Helen) 
 
 \subsection{Model Selection Plan}
 
@@ -207,44 +207,72 @@ We will use a classification model for addressing objective 1 because the predic
 
 Specifically for objective 1, a logistic regression model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors, so long as they are one-hot encoded (which was done previously). 
 
-Tree based models will be used for objective 2. This will be helpful in making a model with mixed data types (numeric and categorical) without first hot encoding. 
+Tree based models will be used for objective 2. This will be helpful in making a model with mixed data types (numeric and categorical) without first hot encoding. (Helen)
 
 \subsection{Evaluation Strategy}
 
 For our evaluation strategy, we plan to use accuracy and precision to evaluate how well our model does. This entails using "from sklearn import tree", making a decision classifier and fitting the classifier, making predictions on the test set, then completing a confusion matrix with an accuracy formula. (Rachel)
 
-\subsubsection{Sections and Subsections}
+\section{Analysis}
 
-Section headings should be numbered, flush left, and set in 11~pt bold
-type with the content words capitalized. Leave 0.25~inches of space
-before the heading and 0.15~inches after the heading.
+\subsection{Model implementation}
 
-Similarly, subsection headings should be numbered, flush left, and set
-in 10~pt bold type with the content words capitalized. Leave
-0.2~inches of space before the heading and 0.13~inches afterward.
+\textbf{Decision Tree Classifier}: It is a classification model that measures the probability of a hospital being rated “as expected”, “worse”, or “better” based on independent variables we gave it. To set this up, we used a def(maxmin) function and set our x and y. Our x was our features, which we chose to be 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital", and "Measure". Our y, or target variable, was Hospital ratings. Next, we selected the numeric x variables for normalization, and then recombined them with the categorical x variables. We then split the data on an 80/20 train test split. Next, we one hot encoded all of the categorical variables (County, Measure, and Hospital). Then, we imported the decision tree classifier, created the classifier object, fit the classifier, and made predictions on the test set. We finally computed accuracy to evaluate how well our model did.
 
-Finally, subsubsection headings should be numbered, flush left, and
-set in 10~pt small caps with the content words capitalized. Leave
-0.18~inches of space before the heading and 0.1~inches after the
-heading.
+\textbf{Random forest}: This was a more complicated model we chose, and we used this to explore our secondary question, so we made a model where our target variable was ‘Risk Adjusted Rate’ and we used a multitude of features in this model. Here, our model built a lot of decision trees and the random forest averages our results. This is more accurate than just one decision tree. To build this model, we first split the data into training rows and testing rows. We then removed the rows with the target to finalize our df\_train and df\_test. Our next step bootstrapping, where we set T=1000, and we split the data again into an X\_train and y\_train, X\_test and y\_test, where the y’s used arcsinh, and the x code dropped the risk adjusted rate. We then re-one hot encoded our categorical columns because we were having issues with our code. We then used a for loop to generate a bootstrapping sample, computed rsq, and made/saved predictions. Our next step was building an ensemble predictor, and we printed our rsq. 
+We did the same thing but predicted hospital rating, it just required a lot of online work and AI to help refine my code because it needed to be changed from arcsinh to a classifier random forest.
 
-Please use no more than three levels of headings.
+\textbf{Multiple Linear Regression}: This was used as a comparison model to the random forest, and it predicts risk adjusted rate utilizing the other numeric variables in our dataset as predictors. We first dropped NA’s from our numerical variables as it was causing issues in the code. Next, we used def mlr(x,y) to build our multiple linear regression function. We set our intercept equal to one, and set our X to be our intercept + predictors, and our y to be Risk Adjusted Rate. Finally, we printed our MLR coefficients and r-squared.
 
-\subsubsection{Paragraphs and Footnotes}
 
-Within each section or subsection, you should further partition the
-paper into paragraphs. Do not indent the first line of a given
-paragraph, but insert a blank line between succeeding ones.
+\textbf{K Nearest Neighbors}: This model was used to determine what class (Hospital rating: “as expected”, “worse”, or “better”) a new case will belong to based on the predictor variables. We first created the target and predictor variables. We used get\_dummies to address non-numeric variables. This produced boolean values, so we adjusted the dummy variables to be 0 and 1 rather than “True” and “False”, allowing us to then create the KNN model. Then, we split the data 80/20, and scaled the X\_test and X\_train so that values would be comparable. Next, we needed to determine the ideal k value using SEE across possible values of 1-50 for k. The ideal K was 1 to minimize classification error. This is a bit unusual, but it is possible that the ideal k can be 1 when the data is clean and lacks excessive noise. However, the model may be prone to overfitting. 
 
-You can use footnotes\footnote{Footnotes
-should be complete sentences.} to provide readers with additional
-information about a topic without interrupting the flow of the paper.
-Indicate footnotes with a number in the text where the point is most
-relevant. Place the footnote in 9~point type at the bottom of the
-column in which it appears. Precede the first footnote in a column
-with a horizontal rule of 0.8~inches.\footnote{Multiple footnotes can
-appear in each column, in the same order as they appear in the text,
-but spread them across columns and pages if possible.}
+
+
+\subsection{Architecture/structure}
+
+\textbf{Number of trees in random forest}: T=1000
+\textbf{Optimal k for KNN}: k=1
+
+\subsection{Pre-processing Steps}
+
+\textbf{Train/Validation/Test split}: We split the data into an 80/20 train test split, which allows us to train a good chunk of the data, while the other piece is used to evaluate performance. We used this method in our decision tree classifier, and our K nearest neighbors model. We followed the code from the random forest classifier class to split our data for random forest.
+
+\textbf{Scaling}: We scaled the data for the KNN model so that their values would be comparable. Once this was completed, we were able to determine the K value that minimizes test classification error, and make the KNN model. We also used maxmin functions for our decision tree classifier. 
+
+\textbf{One hot encoding}: We have one hot encoded measure (readmission/mortality), hospital rating, and county to use in our models. 
+
+\textbf{Feature Selection}: The features we used to build our model were 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital",  and "Measure" if we were predicting hospital ratings. We used these measures as we saw some interesting relationships in our preliminary graphs and wanted to thus incorporate these variables into the model. For our models where we predicted risk adjusted rate, in the random forest, we used all of our variables in our dataset because we were curious how keeping them all in would affect rsq. The features we used in our MLR model included all of our numeric variables, except for risk adjusted rate, which was our target.
+
+\section{Evaluation Benchmark}
+
+\subsection{Metrics Used}
+\textbf{Accuracy}:
+The accuracy for our decision tree classifier was 0.92.\\
+The accuracy for our KNN model was 0.93.
+
+\vspace{0.3cm}
+
+\noindent\textbf{Confusion Matrix}
+
+\begin{tabular}{p{3cm}|c|c|c|c}
+\hline
+\textbf{Actual / Predicted} & \textbf{Class 0} & \textbf{Class 1} & \textbf{Class 2} & \textbf{Class 3} \\
+\hline
+\textbf{Class 0} & 189 & 2 & 0 & 0 \\
+\textbf{Class 1} & 6 & 1 & 0 & 0 \\
+\textbf{Class 2} & 1 & 0 & 0 & 0 \\
+\textbf{Class 3} & 5 & 0 & 0 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\textbf{R-squared}: Our ensemble rsq for the random forest was 0.76, and our rsq for MLR was 0.0056.
+
+\subsection{Model comparison}
+The KNN model had the best accuracy. As aforementioned, however, the k value with the least test classification error was 1, which makes this model more prone to overfitting. Random forest has a far better r-squared value compared to the multiple linear regression model (0.76 and 0.0056, respectively). 
+
 
 \begin{figure}[ht]
 \vskip 0.2in
