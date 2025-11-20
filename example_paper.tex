@@ -273,6 +273,9 @@ The accuracy for our KNN model was 0.93.
 \subsection{Model comparison}
 The KNN model had the best accuracy. As aforementioned, however, the k value with the least test classification error was 1, which makes this model more prone to overfitting. Random forest has a far better r-squared value compared to the multiple linear regression model (0.76 and 0.0056, respectively). 
 
+\section{Initial Results Analysis}
+
+The random forest and decision tree classifier models performed better than the KNN and MLR models. Regarding the KNN model, this one was not as ideal, though it has a high accuracy (0.93) due to the fact that the ideal k for minimizing test classification error was k=1. This model, therefore, is prone to overfitting. The model presenting these characteristics because the cleaned data set was large, clean, and lacked excessive noise. MLR performed poorly because a linear model simply failed to capture the variance in the data. The trends were more complex. The random forest model performed better because this model is non-linear and random forests account for more complex patterns.
 
 \begin{figure}[ht]
 \vskip 0.2in
