@@ -1,7 +1,7 @@
 %%%%%%%% ICML 2025 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
 
 \documentclass{article}
-
+\usepackage{float}
 % Recommended, but optional, packages for figures and better typesetting:
 \usepackage{microtype}
 \usepackage{graphicx}
@@ -217,44 +217,53 @@ For our evaluation strategy, we plan to use accuracy and precision to evaluate h
 
 \subsection{Model implementation}
 
-\textbf{Decision Tree Classifier}: It is a classification model that measures the probability of a hospital being rated “as expected”, “worse”, or “better” based on independent variables we gave it. To set this up, we used a def(maxmin) function and set our x and y. Our x was our features, which we chose to be 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital", and "Measure". Our y, or target variable, was Hospital ratings. Next, we selected the numeric x variables for normalization, and then recombined them with the categorical x variables. We then split the data on an 80/20 train test split. Next, we one hot encoded all of the categorical variables (County, Measure, and Hospital). Then, we imported the decision tree classifier, created the classifier object, fit the classifier, and made predictions on the test set. We finally computed accuracy to evaluate how well our model did.
+\textbf{Decision Tree Classifier}: It is a classification model that measures the probability of a hospital being rated “as expected”, “worse”, or “better” based on independent variables we gave it. To set this up, we used a def(maxmin) function and set our x and y. Our x was our features, which we chose to be 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital", and "Measure". Our y, or target variable, was Hospital ratings. Next, we selected the numeric x variables for normalization, and then recombined them with the categorical x variables. We then split the data on an 80/20 train test split. Next, we one hot encoded all of the categorical variables (County, Measure, and Hospital). Then, we imported the decision tree classifier, created the classifier object, fit the classifier, and made predictions on the test set. We finally computed accuracy to evaluate how well our model did. (Rachel)
 
 \textbf{Random forest}: This was a more complicated model we chose, and we used this to explore our secondary question, so we made a model where our target variable was ‘Risk Adjusted Rate’ and we used a multitude of features in this model. Here, our model built a lot of decision trees and the random forest averages our results. This is more accurate than just one decision tree. To build this model, we first split the data into training rows and testing rows. We then removed the rows with the target to finalize our df\_train and df\_test. Our next step bootstrapping, where we set T=1000, and we split the data again into an X\_train and y\_train, X\_test and y\_test, where the y’s used arcsinh, and the x code dropped the risk adjusted rate. We then re-one hot encoded our categorical columns because we were having issues with our code. We then used a for loop to generate a bootstrapping sample, computed rsq, and made/saved predictions. Our next step was building an ensemble predictor, and we printed our rsq. 
-We did the same thing but predicted hospital rating, it just required a lot of online work and AI to help refine my code because it needed to be changed from arcsinh to a classifier random forest.
-
-\textbf{Multiple Linear Regression}: This was used as a comparison model to the random forest, and it predicts risk adjusted rate utilizing the other numeric variables in our dataset as predictors. We first dropped NA’s from our numerical variables as it was causing issues in the code. Next, we used def mlr(x,y) to build our multiple linear regression function. We set our intercept equal to one, and set our X to be our intercept + predictors, and our y to be Risk Adjusted Rate. Finally, we printed our MLR coefficients and r-squared.
+We did the same thing but predicted hospital rating, it just required a lot of online work and AI to help refine my code because it needed to be changed from arcsinh to a classifier random forest. 
 
 
-\textbf{K Nearest Neighbors}: This model was used to determine what class (Hospital rating: “as expected”, “worse”, or “better”) a new case will belong to based on the predictor variables. We first created the target and predictor variables. We used get\_dummies to address non-numeric variables. This produced boolean values, so we adjusted the dummy variables to be 0 and 1 rather than “True” and “False”, allowing us to then create the KNN model. Then, we split the data 80/20, and scaled the X\_test and X\_train so that values would be comparable. Next, we needed to determine the ideal k value using SEE across possible values of 1-50 for k. The ideal K was 1 to minimize classification error. This is a bit unusual, but it is possible that the ideal k can be 1 when the data is clean and lacks excessive noise. However, the model may be prone to overfitting. 
+We also used random forests for classification on hospital ratings. This did not include bootstrapping. To build it, we defined our target variable y and our features x (all variables except year and OSHPDID), one hot encoded the categorical columns, and did an 80/20 train test split on the data. Then, we imported RandomForestClassifier, fit the classifier, and printed the confusion matrix and accuracy.
+(Rachel)
+
+\textbf{Multiple Linear Regression}: This was used as a comparison model to the ensemble random forest, and it predicts risk adjusted rate utilizing the other numeric variables in our dataset as predictors. We first dropped NA’s from our numerical variables as it was causing issues in the code. Next, we used def mlr(x,y) to build our multiple linear regression function. We set our intercept equal to one, and set our X to be our intercept + predictors, and our y to be Risk Adjusted Rate. Finally, we printed our MLR coefficients and r-squared. (Rachel)
+
+
+\textbf{K Nearest Neighbors}: This model was used to determine what class (Hospital rating: “as expected”, “worse”, or “better”) a new case will belong to based on the predictor variables. We first created the target and predictor variables. We used get\_dummies to address non-numeric variables. This produced boolean values, so we adjusted the dummy variables to be 0 and 1 rather than “True” and “False”, allowing us to then create the KNN model. Then, we split the data 80/20, and scaled the X\_test and X\_train so that values would be comparable. Next, we needed to determine the ideal k value using SEE across possible values of 1-50 for k. The ideal K was 1 to minimize classification error. This is a bit unusual, but it is possible that the ideal k can be 1 when the data is clean and lacks excessive noise. However, the model may be prone to overfitting. (Helen)
 
 
 
 \subsection{Architecture/structure}
 
-\textbf{Number of trees in random forest}: T=1000
-\textbf{Optimal k for KNN}: k=1
+\textbf{Number of trees in random forest}: We set T=1000 for the ensemble random forest, which predicted risk adjusted rate.
+\textbf{Optimal k for KNN}: k=1 (Helen and Rachel)
 
 \subsection{Pre-processing Steps}
 
-\textbf{Train/Validation/Test split}: We split the data into an 80/20 train test split, which allows us to train a good chunk of the data, while the other piece is used to evaluate performance. We used this method in our decision tree classifier, and our K nearest neighbors model. We followed the code from the random forest classifier class to split our data for random forest.
+\textbf{Train/Validation/Test split}: We split the data into an 80/20 train test split, which allows us to train a good chunk of the data, while the other piece is used to evaluate performance. We used this method in our decision tree classifier, our random forest for hospital ratings, and our K nearest neighbors model. We followed the code from the random forest classifier class to split our data for random forest. (Rachel)
 
-\textbf{Scaling}: We scaled the data for the KNN model so that their values would be comparable. Once this was completed, we were able to determine the K value that minimizes test classification error, and make the KNN model. We also used maxmin functions for our decision tree classifier. 
+\textbf{Scaling}: We scaled the data for the KNN model so that their values would be comparable. Once this was completed, we were able to determine the K value that minimizes test classification error, and make the KNN model. We also used maxmin functions for our decision tree classifier. (Helen)
 
-\textbf{One hot encoding}: We have one hot encoded measure (readmission/mortality), hospital rating, and county to use in our models. 
+\textbf{One hot encoding}: We have one hot encoded measure (readmission/mortality), hospital rating, and county to use in our models. (Rachel)
 
-\textbf{Feature Selection}: The features we used to build our model were 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital",  and "Measure" if we were predicting hospital ratings. We used these measures as we saw some interesting relationships in our preliminary graphs and wanted to thus incorporate these variables into the model. For our models where we predicted risk adjusted rate, in the random forest, we used all of our variables in our dataset because we were curious how keeping them all in would affect rsq. The features we used in our MLR model included all of our numeric variables, except for risk adjusted rate, which was our target.
+\textbf{Feature Selection}: The features we used to build our model were 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital",  and "Measure" if we were predicting hospital ratings. We used these measures as we saw some interesting relationships in our preliminary graphs and wanted to thus incorporate these variables into the model. For our models where we predicted risk adjusted rate, in the random forest ensemble (for risk adjusted rate), we used all of our variables in our dataset because we were curious how keeping them all in would affect ensemble rsq. The features we used in our MLR model included all of our numeric variables, except for risk adjusted rate, which was our target. (Rachel)
 
 \section{Evaluation Benchmark}
 
 \subsection{Metrics Used}
 \textbf{Accuracy}:
-The accuracy for our decision tree classifier was 0.92.\\
-The accuracy for our KNN model was 0.93.
+The accuracy for our decision tree classifier was 0.92.\\ (Rachel)
+The accuracy for our KNN model was 0.93. (Helen)
+The accuracy for our random forest (hospital ratings) model was 0.926. (Rachel)
 
 \vspace{0.3cm}
 
 \noindent\textbf{Confusion Matrix}
 
+\begin{table}[h!]
+\centering
+\caption{KNN Confusion Matrix}
+\label{tab:knn_confusion_matrix}
 \begin{tabular}{p{3cm}|c|c|c|c}
 \hline
 \textbf{Actual / Predicted} & \textbf{Class 0} & \textbf{Class 1} & \textbf{Class 2} & \textbf{Class 3} \\
@@ -266,259 +275,66 @@ The accuracy for our KNN model was 0.93.
 \hline
 \end{tabular}
 \end{table}
+(Helen)
 
+\begin{table}[h!]
+\centering
+\caption{MLR Confusion Matrix}
+\label{tab:confusion_matrix}
+\begin{tabular}{c|c|c|c}
+\hline
+\textbf{Actual / Predicted} & \textbf{Class 0} & \textbf{Class 1} & \textbf{Class 2} \\
+\hline
+\textbf{Class 0} & 182 & 4 & 1 \\
+\textbf{Class 1} & 4 & 6 & 0 \\
+\textbf{Class 2} & 7 & 0 & 1 \\
+\hline
+\end{tabular}
+\end{table}
+(Rachel)
 \vspace{0.3cm}
-\textbf{R-squared}: Our ensemble rsq for the random forest was 0.76, and our rsq for MLR was 0.0056.
+\textbf{R-squared}: Our ensemble rsq for the ensemble random forest was 0.76, and our rsq for MLR was 0.0056.
+(Helen and Rachel)
+\usepackage{graphicx} % in preamble
+
 
 \subsection{Model comparison}
-The KNN model had the best accuracy. As aforementioned, however, the k value with the least test classification error was 1, which makes this model more prone to overfitting. Random forest has a far better r-squared value compared to the multiple linear regression model (0.76 and 0.0056, respectively). 
+The KNN model had the best accuracy. As aforementioned, however, the k value with the least test classification error was 1, which makes this model more prone to overfitting. For predicting risk adjusted rate, random forest has a far better r-squared value compared to the multiple linear regression model (0.76 and 0.0056, respectively). (Helen)
+
+\subsection{Initial Results and Comparison}
+\textbf{Interpretation of which model performed best}:For models predicting hospital ratings, k nearest neighbors performed the best in regards to accuracy, but the decision tree classifier accuracy was very close to k nearest neighbors. In addition, the decision tree classifier is less prone to overfitting vs. the k nearest neighbors because our optimal k is 1 for the KNN. Further, from our random forest model, we had an accuracy of 0.926, which was higher than the decision tree classifier, and therefore our best model.
+
+For models predicting risk adjusted rate, MLR performed poorly with a low rsq. The random forest performed better with a significantly higher rsq. 
 
 \section{Initial Results Analysis}
 
-The random forest and decision tree classifier models performed better than the KNN and MLR models. Regarding the KNN model, this one was not as ideal, though it has a high accuracy (0.93) due to the fact that the ideal k for minimizing test classification error was k=1. This model, therefore, is prone to overfitting. The model presenting these characteristics because the cleaned data set was large, clean, and lacked excessive noise. MLR performed poorly because a linear model simply failed to capture the variance in the data. The trends were more complex. The random forest model performed better because this model is non-linear and random forests account for more complex patterns.
+The random forest and decision tree classifier models performed better than the KNN and MLR models. Regarding the KNN model, this one was not as ideal, though it has a high accuracy (0.93) due to the fact that the ideal k for minimizing test classification error was k=1. This model, therefore, is prone to overfitting. The model presenting these characteristics because the cleaned data set was large, clean, and lacked excessive noise. MLR performed poorly because a linear model simply failed to capture the variance in the data. The trends were more complex. The random forest model performed better because this model is non-linear and random forests account for more complex patterns. (Helen)
 
-\begin{figure}[ht]
-\vskip 0.2in
-\begin{center}
-\centerline{\includegraphics[width=\columnwidth]{icml_numpapers}}
-\caption{Historical locations and number of accepted papers for International
-Machine Learning Conferences (ICML 1993 -- ICML 2008) and International
-Workshops on Machine Learning (ML 1988 -- ML 1992). At the time this figure was
-produced, the number of accepted papers for ICML 2008 was unknown and instead
-estimated.}
-\label{icml-historical}
-\end{center}
-\vskip -0.2in
+Random forest was likely the best when it came to predicting hospital ratings as it takes multiple trees and has them “vote” on the outcome, so there are many more trees contributing to the results.
+(Rachel)
+
+\section{Issues and Limitations}
+We had some limitations when it came to ensemble learning for random forest as our code kept throwing errors. However, we just needed to make small adjustments to how we one-hot encoded and the order of our code, and it eventually worked. 
+\section{Figures}
+
+\begin{figure}[H]  % note the capital H
+\centering
+\includegraphics[width=0.4\textwidth]{MLR Graph.png}
+\caption{MLR model results}
+\label{fig:mlr_graph}
 \end{figure}
 
-\subsection{Figures}
-
-You may want to include figures in the paper to illustrate
-your approach and results. Such artwork should be centered,
-legible, and separated from the text. Lines should be dark and at
-least 0.5~points thick for purposes of reproduction, and text should
-not appear on a gray background.
-
-Label all distinct components of each figure. If the figure takes the
-form of a graph, then give a name for each axis and include a legend
-that briefly describes each curve. Do not include a title inside the
-figure; instead, the caption should serve this function.
-
-Number figures sequentially, placing the figure number and caption
-\emph{after} the graphics, with at least 0.1~inches of space before
-the caption and 0.1~inches after it, as in
-\cref{icml-historical}. The figure caption should be set in
-9~point type and centered unless it runs two or more lines, in which
-case it should be flush left. You may float figures to the top or
-bottom of a column, and you may set wide figures across both columns
-(use the environment \texttt{figure*} in \LaTeX). Always place
-two-column figures at the top or bottom of the page.
-
-\subsection{Algorithms}
-
-If you are using \LaTeX, please use the ``algorithm'' and ``algorithmic''
-environments to format pseudocode. These require
-the corresponding stylefiles, algorithm.sty and
-algorithmic.sty, which are supplied with this package.
-\cref{alg:example} shows an example.
-
-\begin{algorithm}[tb]
-   \caption{Bubble Sort}
-   \label{alg:example}
-\begin{algorithmic}
-   \STATE {\bfseries Input:} data $x_i$, size $m$
-   \REPEAT
-   \STATE Initialize $noChange = true$.
-   \FOR{$i=1$ {\bfseries to} $m-1$}
-   \IF{$x_i > x_{i+1}$}
-   \STATE Swap $x_i$ and $x_{i+1}$
-   \STATE $noChange = false$
-   \ENDIF
-   \ENDFOR
-   \UNTIL{$noChange$ is $true$}
-\end{algorithmic}
-\end{algorithm}
-
-\subsection{Tables}
-
-You may also want to include tables that summarize material. Like
-figures, these should be centered, legible, and numbered consecutively.
-However, place the title \emph{above} the table with at least
-0.1~inches of space before the title and the same after it, as in
-\cref{sample-table}. The table title should be set in 9~point
-type and centered unless it runs two or more lines, in which case it
-should be flush left.
-
-% Note use of \abovespace and \belowspace to get reasonable spacing
-% above and below tabular lines.
-
-\begin{table}[t]
-\caption{Classification accuracies for naive Bayes and flexible
-Bayes on various data sets.}
-\label{sample-table}
-\vskip 0.15in
-\begin{center}
-\begin{small}
-\begin{sc}
-\begin{tabular}{lcccr}
-\toprule
-Data set & Naive & Flexible & Better? \\
-\midrule
-Breast    & 95.9$\pm$ 0.2& 96.7$\pm$ 0.2& $\surd$ \\
-Cleveland & 83.3$\pm$ 0.6& 80.0$\pm$ 0.6& $\times$\\
-Glass2    & 61.9$\pm$ 1.4& 83.8$\pm$ 0.7& $\surd$ \\
-Credit    & 74.8$\pm$ 0.5& 78.3$\pm$ 0.6&         \\
-Horse     & 73.3$\pm$ 0.9& 69.7$\pm$ 1.0& $\times$\\
-Meta      & 67.1$\pm$ 0.6& 76.5$\pm$ 0.5& $\surd$ \\
-Pima      & 75.1$\pm$ 0.6& 73.9$\pm$ 0.5&         \\
-Vehicle   & 44.9$\pm$ 0.6& 61.5$\pm$ 0.4& $\surd$ \\
-\bottomrule
-\end{tabular}
-\end{sc}
-\end{small}
-\end{center}
-\vskip -0.1in
-\end{table}
-
-Tables contain textual material, whereas figures contain graphical material.
-Specify the contents of each row and column in the table's topmost
-row. Again, you may float tables to a column's top or bottom, and set
-wide tables across both columns. Place two-column tables at the
-top or bottom of the page.
-
-\subsection{Theorems and such}
-The preferred way is to number definitions, propositions, lemmas, etc. consecutively, within sections, as shown below.
-\begin{definition}
-\label{def:inj}
-A function $f:X \to Y$ is injective if for any $x,y\in X$ different, $f(x)\ne f(y)$.
-\end{definition}
-Using \cref{def:inj} we immediate get the following result:
-\begin{proposition}
-If $f$ is injective mapping a set $X$ to another set $Y$, 
-the cardinality of $Y$ is at least as large as that of $X$
-\end{proposition}
-\begin{proof} 
-Left as an exercise to the reader. 
-\end{proof}
-\cref{lem:usefullemma} stated next will prove to be useful.
-\begin{lemma}
-\label{lem:usefullemma}
-For any $f:X \to Y$ and $g:Y\to Z$ injective functions, $f \circ g$ is injective.
-\end{lemma}
-\begin{theorem}
-\label{thm:bigtheorem}
-If $f:X\to Y$ is bijective, the cardinality of $X$ and $Y$ are the same.
-\end{theorem}
-An easy corollary of \cref{thm:bigtheorem} is the following:
-\begin{corollary}
-If $f:X\to Y$ is bijective, 
-the cardinality of $X$ is at least as large as that of $Y$.
-\end{corollary}
-\begin{assumption}
-The set $X$ is finite.
-\label{ass:xfinite}
-\end{assumption}
-\begin{remark}
-According to some, it is only the finite case (cf. \cref{ass:xfinite}) that is interesting.
-\end{remark}
-%restatable
-
-\subsection{Citations and References}
-
-Please use APA reference format regardless of your formatter
-or word processor. If you rely on the \LaTeX\/ bibliographic
-facility, use \texttt{natbib.sty} and \texttt{icml2025.bst}
-included in the style-file package to obtain this format.
-
-Citations within the text should include the authors' last names and
-year. If the authors' names are included in the sentence, place only
-the year in parentheses, for example when referencing Arthur Samuel's
-pioneering work \yrcite{Samuel59}. Otherwise place the entire
-reference in parentheses with the authors and year separated by a
-comma \cite{Samuel59}. List multiple references separated by
-semicolons \cite{kearns89,Samuel59,mitchell80}. Use the `et~al.'
-construct only for citations with three or more authors or after
-listing all authors to a publication in an earlier reference \cite{MachineLearningI}.
-
-Authors should cite their own work in the third person
-in the initial version of their paper submitted for blind review.
-Please refer to \cref{author info} for detailed instructions on how to
-cite your own papers.
-
-Use an unnumbered first-level section heading for the references, and use a
-hanging indent style, with the first line of the reference flush against the
-left margin and subsequent lines indented by 10 points. The references at the
-end of this document give examples for journal articles \cite{Samuel59},
-conference publications \cite{langley00}, book chapters \cite{Newell81}, books
-\cite{DudaHart2nd}, edited volumes \cite{MachineLearningI}, technical reports
-\cite{mitchell80}, and dissertations \cite{kearns89}.
-
-Alphabetize references by the surnames of the first authors, with
-single author entries preceding multiple author entries. Order
-references for the same authors by year of publication, with the
-earliest first. Make sure that each reference includes all relevant
-information (e.g., page numbers).
-
-Please put some effort into making references complete, presentable, and
-consistent, e.g. use the actual current name of authors.
-If using bibtex, please protect capital letters of names and
-abbreviations in titles, for example, use \{B\}ayesian or \{L\}ipschitz
-in your .bib file.
-
-\section*{Accessibility}
-Authors are kindly asked to make their submissions as accessible as possible for everyone including people with disabilities and sensory or neurological differences.
-Tips of how to achieve this and what to pay attention to will be provided on the conference website \url{http://icml.cc/}.
-
-\section*{Software and Data}
-
-If a paper is accepted, we strongly encourage the publication of software and data with the
-camera-ready version of the paper whenever appropriate. This can be
-done by including a URL in the camera-ready copy. However, \textbf{do not}
-include URLs that reveal your institution or identity in your
-submission for review. Instead, provide an anonymous URL or upload
-the material as ``Supplementary Material'' into the OpenReview reviewing
-system. Note that reviewers are not required to look at this material
-when writing their review.
-
-% Acknowledgements should only appear in the accepted version.
-\section*{Acknowledgements}
-
-\textbf{Do not} include acknowledgements in the initial version of
-the paper submitted for blind review.
-
-If a paper is accepted, the final camera-ready version can (and
-usually should) include acknowledgements.  Such acknowledgements
-should be placed at the end of the section, in an unnumbered section
-that does not count towards the paper page limit. Typically, this will 
-include thanks to reviewers who gave useful comments, to colleagues 
-who contributed to the ideas, and to funding agencies and corporate 
-sponsors that provided financial support.
-
-\section*{Impact Statement}
-
-Authors are \textbf{required} to include a statement of the potential 
-broader impact of their work, including its ethical aspects and future 
-societal consequences. This statement should be in an unnumbered 
-section at the end of the paper (co-located with Acknowledgements -- 
-the two may appear in either order, but both must be before References), 
-and does not count toward the paper page limit. In many cases, where 
-the ethical impacts and expected societal implications are those that 
-are well established when advancing the field of Machine Learning, 
-substantial discussion is not required, and a simple statement such 
-as the following will suffice:
-
-``This paper presents work whose goal is to advance the field of 
-Machine Learning. There are many potential societal consequences 
-of our work, none which we feel must be specifically highlighted here.''
-
-The above statement can be used verbatim in such cases, but we 
-encourage authors to think about whether there is content which does 
-warrant further discussion, as this statement will be apparent if the 
-paper is later flagged for ethics review.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.4\textwidth]{KNN SEE.png}
+\caption{KNN Classification Error vs. k}
+\label{fig:mlr_graph}
+\end{figure}
 
 
-% In the unusual situation where you want a paper to appear in the
-% references without citing it in the main text, use \nocite
+
+
+
 \nocite{langley00}
 
 \bibliography{example_paper}
@@ -528,18 +344,6 @@ paper is later flagged for ethics review.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % APPENDIX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\appendix
-\onecolumn
-\section{You \emph{can} have an appendix here.}
-
-You can have as much text here as you want. The main body must be at most $8$ pages long.
-For the final version, one more page can be added.
-If you want, you can use an appendix like this one.  
-
-The $\mathtt{\backslash onecolumn}$ command above can be kept in place if you prefer a one-column appendix, or can be removed if you prefer a two-column appendix.  Apart from this possible change, the style (font size, spacing, margins, page numbering, etc.) should be kept the same as the main body.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
