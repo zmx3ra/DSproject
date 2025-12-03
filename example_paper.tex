@@ -1,5 +1,3 @@
-%%%%%%%% ICML 2025 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
-
 \documentclass{article}
 \usepackage{float}
 % Recommended, but optional, packages for figures and better typesetting:
@@ -60,55 +58,30 @@
 \begin{document}
 
 \twocolumn[
-\icmltitle{Relationship between Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates, Hospital Quality Ratings, and Location.}
-
-% It is OKAY to include author information, even for blind
-% submissions: the style file will automatically remove it for you
-% unless you've provided the [accepted] option to the icml2025
-% package.
-
-% List of affiliations: The first argument should be a (short)
-% identifier you will use later to specify author affiliations
-% Academic affiliations should list Department, University, City, Region, Country
-% Industry affiliations should list Company, City, Region, Country
-
-% You can specify symbols, otherwise they are numbered in order.
-% Ideally, you should not use this facility. Affiliations will be numbered
-% in order of appearance and this is the preferred way.
-\icmlsetsymbol{equal}{*}
+\icmltitle{An Examination of Ischemic Stroke Data: Exploring Machine Learning Models to Predict Hospital Ratings and Risk Adjusted Rate. }
 
 \begin{icmlauthorlist}
 \icmlauthor{Rachel Kersey}{equal,yyy}
 \icmlauthor{Helen Sparling}{equal,yyy,comp}
 \end{icmlauthorlist}
 
-% You may provide any keywords that you
-% find helpful for describing your paper; these are used to populate
-% the "keywords" metadata in the PDF but will not be shown in the document
 \icmlkeywords{Machine Learning, ICML}
 
 \vskip 0.3in
-]
-
-% this must go after the closing bracket ] following \twocolumn[ ...
-
-% This command actually creates the footnote in the first column
-% listing the affiliations and the copyright notice.
-% The command takes one argument, which is text to display at the start of the footnote.
-% The \icmlEqualContribution command is standard text for equal contribution.
-% Remove it (just {}) if you do not need this facility.
-
-%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
-%\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
 \begin{abstract}
-This paper examines the relationship between Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates, Hospital Quality Ratings, and Location. (More will be added after data description) (Rachel Kersey)
+This paper examines the best machine learning models to use in our dataset of ischemic stroke. Specifically, we used four different machine learning models: decision tree classifier, random forest and k nearest neighbor to predict hospital ratings, and multiple linear regression/a separate random forest model to predict risk adjusted rate. The variety of models used gave a detailed picture of the models that performed best in predicting categorical and numeric variables. The results indicated that the best classification model for hospital ratings was the random forest model, as it produced an ensemble accuracy of 0.93. Further, the decision tree classifier also performed decently, giving an accuracy score of 0.92. For prediction of risk adjusted rate, the ensemble random forest also performed the best, producing a r-squared ensemble of 0.76. The multiple linear regression did not perform well whatsoever, with an r-squared of .005. Overall, this analysis gives a good idea of the best machine learning models to use when evaluating this dataset. 
 \end{abstract}
 
-\section{Data Description}
+]  % <-- end of the full-width block
+
+\section{Introduction}
+
+
+\section{Data}
 \label{submission}
 
-The dataset name is, “Ischemic Stroke 30-Day Mortality and 30-Day Readmission Rates and Quality Ratings for CA Hospitals.” We got it from Data.gov, which is a reputable source to pull data from. The hyperlink to the dataset is as follows. The purpose of this dataset is to show risk-adjusted 30 day mortality and readmission rates, as well as quality ratings and deaths/readmissions, for Ischemic Strokes treated in hospitals in California. This dataset is important as it shows how hospital ratings are related to stroke readmissions and deaths: and a possible correlation could demonstrate the need for hospitals to increase their ratings in order to lower readmission or death rates. The URL is available here:
+The data set used for this investigation is “Ischemic Stroke Mortality and Readmission Rates at 30-Days and Quality Ratings in CA Hospitals.” The dataset is from Data.gov, a reputable website that contains many different kinds of datasets across a range of topics. The hyperlink to the data set is given below. Simply put, this dataset contains information on risk-adjusted mortality and readmission rates at 30 days, as well as quality ratings and deaths/readmissions, for Ischemic Strokes treated in hospitals throughout the state of California. Importantly, the risk-adjusted 30 day mortality examines mortality rates for each datapoint as adjusted for the severity of the individuals condition (risk adjusted). This dataset is important as it shows how hospital ratings are related to stroke readmissions and deaths: and machine learning models predicting these variables could demonstrate the need for hospitals to increase their ratings in order to lower readmission or death rates. The URL is available here:
 
 \begin{center}
 \textbf{\href{https://catalog.data.gov/dataset/ischemic-stroke-30-day-mortality-and-30-day-readmission-rates-and-quality-ratings-for-ca-h-92036}{Stroke Dataset Link}}
@@ -116,9 +89,9 @@ The dataset name is, “Ischemic Stroke 30-Day Mortality and 30-Day Readmission 
 
 
 
-We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. We created a subset to include only the five most populated counties in California. The variables are listed as follows:
+The dataset contained a total of 9 variables, 5 of which were numeric, and 4 of which were categorical. Prior to analysis, the data was subsetted to include only the five most populous counties in the state of California. The breakdown of each variable is as follows:
 \begin{itemize}
-\item Year: quantitative discrete, year data was recorded)\@. 
+\item Year: quantitative discrete, year data was recorded\@. 
 \item County: categorical, county data was recorded in.
 \item Hospital: categorical, hospital data was recorded in.
 \item OSHPDID: categorical, hospital ID, not important for research question).
@@ -166,56 +139,67 @@ We investigated a rich dataset with 9 variables: 5 numeric, and 4 categorical. W
 %results. This program avoids the Type-3 font problem, and supports more
 %advanced features in the \texttt{microtype} package.
 
-\textbf{Data Quality Notes:} The data had missing values. They were replaced with np.Nan so no additional cleaning was needed. Data cleaning included: coercing columns with periods to numeric as a precaution, removing unnecessary wording, splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric. These changes will make data visualization simpler. There were no unnecessary dollar signs, commas, or other characters. The original data set was quite large, so the 5 most populated counties were subsetted to make the dataset more manageable for analysis. The location column was removed because it was not necessary to answer the research question. (Helen Sparling)
+\textbf{Data Quality Notes:} The data had missing values that would cause problems moving into analysis and model construction. In order to address this issue, the missing values were replaced with np.Nan so no additional cleaning was needed. Missing data was aimed to not be deleted as that would have potentially skewed the results of later analysis and model construction. However, later on in the study, some models were giving errors due to the np.Nan, so we were forced to remove the rows that contained missing data. There were not many of these rows though, so we were still able to use models on a large portion of our data.
+
+Data cleaning included: coercing columns with periods to numeric as a precaution using pd.to\_numeric(), removing unnecessary wording changing "30-day Readmission" to "Readmission" using the .str.replace(), splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric using the pd.to\_numeric(). Changing the year column required a few steps. The year column was split at the "-" character using the .st.split() function. Then, as only the start year was needed, not the end year, the first part of the resulting string was selected and kept in a new column, and the old column was deleted. This method was slightly more complex than likely necessary, but it was successful in the end and resulted in a "Year" column that was ready for analysis, visualization, and model construction. Together, all of the changes changes made data visualization simpler. Additionally, as there were no unnecessary dollar signs, commas, or other characters, no other substantial cleaning was necessary. 
+
+As the original dataset was quite large and in order to simplify analysis to further focus the research question, a subset of the dataset including the 5 most populated counties was selected. The location column contained information about the coordinate points of each data entry. The dataset, however, already contained a different column concerning location in terms of County. County is a far more understandable variable to work with compared to coordinates points. Thus, we removed the "location" column as the information was unhelpful and redundant. (Helen Sparling)
 
 
-There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to fix the data and curb the number of outliers. (Rachel Kersey)
+There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to attempt to fix the data.(Rachel Kersey)
 
 
 
 \subsection{Context and Relevance}
 
-Our project/goal is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmissions, and case count. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and re admissions, would help policy makers identify hospitals in need of improvement, and provide recommendations of how to improve patient care. (Helen and Rachel)
+The goal of this project is to investigate the relationships between year and county and how they relate to risk adjusted rate, deaths, readmission, and case counts in hospitals across the five most populous counties in California. Further, we aim to find beneficial machine learning models to utilize in predicting hospital ratings and risk adjusted rates. These models could be useful for future hospitals to use when they are predicting their own risk adjusted rate or hospital rating. This investigation is important from a public health standpoint, and provides helpful insight into hospital functioning in the California area. Understanding which hospitals have higher deaths and cases, as well as how hospital ratings affect cases, deaths, and re admissions, would help policy makers identify hospitals in need of improvement, and provide recommendations of how to improve patient care. (Helen and Rachel)
 
 
 
-\section{Pre-Analysis}
+\section{Methods}
+\subsection{Pre-Analysis}
 
 The following sections outline our pre-analysis plan for our dataset.
 
-\subsection{Refined Research Question}
+\subsubsection{Refined Research Question}
 
 
-We first reviewed some associations in our data utilizing barplots, as well as a correlation matrix. We did not find high correlation between any of the numeric variables. 
+First, barplots were used to review associations within our dataset. A correlation matrix was also used, but there were no strong correlations immediately apparent among the numeric variables within the dataset. 
 
-After reviewing some associations in our data, we found indicators that there is a relationship between hospital ratings and risk adjusted rate, number of cases, and number of deaths/readmissions. Thus, this led us to refine our research question: Predict hospital rating (“as expected”, “worse”, “better”) from hospital location, year, risk adjusted rate, deaths, readmissions, and case count. This question allows us to explore with Machine Learning methods we have used in class. (Rachel)
+After reviewing some associations in the data, indicators of a relationship between hospital ratings and risk adjusted rate, number of cases, and number of deaths/readmissions were found. Based on these findings, the research question was refined to: Predict hospital rating (“as expected”, “worse”, “better”) from hospital location, year, risk adjusted rate, deaths, readmission, and case count. This question was used to use Machine Learning models discussed in class. (Rachel)
 
-\subsection{Data Splitting Plan}
+\subsubsection{Data Splitting Plan}
 
-For our data splitting, we plan to utilize an 80/20 train test split through a def(maxmin) function, creating target and feature variables, and using the "from sklearn.model selection import train test split." (Rachel)
+For our data splitting, we plan to utilize an 80/20 train test split through a def(maxmin) function, creating target and feature variables, and using the "from sklearn.model selection import train test split" in our decision tree classifier and k nearest neighbors. For the random forest models, we used train size = int(.8*N) and then subset df [0:train size] in order to split the data into training and testing rows. We did not split the data for multiple linear regression. (Rachel)
 
-\subsection{Feature Selection}
+\subsubsection{Feature Selection}
 \label{author info}
 
-Before running any machine learning, certain variables were one-hot encoded. Variables that were one-hot encoded included County and measure (mortality or readmission). We did not one-hot encode by hospital due to the large number of different hospitals. County was a more reasonable location-based variable to one-hot encode. Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
+Before running any machine learning, certain categorical variables were one-hot encoded. Variables that were one-hot encoded included County and measure (mortality or readmission). Measure was a particularly simple one to one-hot encode conceptually because of the binary nature of the variable. Similarly, readmission was a binary categorical variable, and thus one-hot encoding was simple and intuitive. We attempted to one-hot encode by hospital, but it quickly proved to be an ineffective way of dealing with the data due to the large number of hospitals in the dataset. As hospital was no longer a good predictor of location, county was a far better location-based variable to one-hot encode as there were far fewer counties than hospitals in the dataset. Numerical variables used will include risk adjusted rate, number of deaths/readmission, and number of cases. 
 
-Interactions between variables will be analyzed. We will predict hospital ratings based on multiple variables, both categorical and numeric. These predictor variables are hospital location (County), year, risk adjusted rate, death, re admissions, and case count. We will do the same for objective 2, using risk adjusted rate as the predicted variable instead of hospital ratings. (Helen) 
+There were to main objectives for this project:
 
-\subsection{Model Selection Plan}
+\textbf{Objective 1:} Create a model that predicts "Hospital Ratings" based on the predictor variables. 
 
-We will use a classification model for addressing objective 1 because the predicted variable is categorical. We will use a linear regression model for objective 2 because the predicted variable is numeric. 
+\textbf{Objective 2:} Create a model that predicts the "Risk Adjusted Rate" based on the predictor variables. 
 
-Specifically for objective 1, a logistic regression model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors, so long as they are one-hot encoded (which was done previously). 
+(Helen) 
 
-Tree based models will be used for objective 2. This will be helpful in making a model with mixed data types (numeric and categorical) without first hot encoding. (Helen)
+\subsubsection{Model Selection Plan}
 
-\subsection{Evaluation Strategy}
+We will use a classification model for addressing objective 1 because the predicted variable is categorical. We will use a multiple linear regression model for objective 2 because the predicted variable is numeric. 
 
-For our evaluation strategy, we plan to use accuracy and precision to evaluate how well our model does. This entails using "from sklearn import tree", making a decision classifier and fitting the classifier, making predictions on the test set, then completing a confusion matrix with an accuracy formula. (Rachel)
+Specifically for objective 1, a decision tree classifier model will be used because the measure variable is a categorical variable. We will also use a K-nearest neighbor for objective 1 because these models can handle categorical targets, categorical predictors, so long as they are one-hot encoded (which was done previously). Lastly, we will use a random forest so we can predict hospital ratings on an ensemble of trees, which gives us a good prediction as lots of trees are used. We used bootstrapping in our random forest here.
 
-\section{Analysis}
+Tree based models (random forest) will be used for objective 2. This will be helpful in predicting risk adjusted rates with an average of many trees. We used bootstrapping in this model. We also did a multiple linear regression model so we would have something to compare the random forest to. (Helen)
 
-\subsection{Model implementation}
+\subsubsection{Evaluation Strategy}
+
+For our evaluation strategy, we plan to use accuracy to evaluate how well our model does for our random forest (hospital ratings), k nearest neighbors, and decision tree classifier. This entails using "from sklearn import tree", making a decision classifier and fitting the classifier, making predictions on the test set, then completing a confusion matrix with an accuracy formula. Further, for our multiple linear regression and random forest (risk adjusted rate), we plan use r squared to assess how well our model performed. (Rachel)
+
+\subsection{Analysis}
+
+\subsubsection{Model implementation}
 
 \textbf{Decision Tree Classifier}: It is a classification model that measures the probability of a hospital being rated “as expected”, “worse”, or “better” based on independent variables we gave it. To set this up, we used a def(maxmin) function and set our x and y. Our x was our features, which we chose to be 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital", and "Measure". Our y, or target variable, was Hospital ratings. Next, we selected the numeric x variables for normalization, and then recombined them with the categorical x variables. We then split the data on an 80/20 train test split. Next, we one hot encoded all of the categorical variables (County, Measure, and Hospital). Then, we imported the decision tree classifier, created the classifier object, fit the classifier, and made predictions on the test set. We finally computed accuracy to evaluate how well our model did. (Rachel)
 
@@ -223,7 +207,7 @@ For our evaluation strategy, we plan to use accuracy and precision to evaluate h
 We did the same thing but predicted hospital rating, it just required a lot of online work and AI to help refine my code because it needed to be changed from arcsinh to a classifier random forest. 
 
 
-We also used random forests for classification on hospital ratings. This did not include bootstrapping. To build it, we defined our target variable y and our features x (all variables except year and OSHPDID), one hot encoded the categorical columns, and did an 80/20 train test split on the data. Then, we imported RandomForestClassifier, fit the classifier, and printed the confusion matrix and accuracy.
+We used random forests for classification on hospital ratings. This did include bootstrapping. To build it, we defined our target variable y and our features x (all variables except year and OSHPDID), one hot encoded the categorical columns, and did an 80/20 train test split on the data. Then, we imported RandomForestClassifier, fit the classifier, and printed the confusion matrix and accuracy.
 (Rachel)
 
 \textbf{Multiple Linear Regression}: This was used as a comparison model to the ensemble random forest, and it predicts risk adjusted rate utilizing the other numeric variables in our dataset as predictors. We first dropped NA’s from our numerical variables as it was causing issues in the code. Next, we used def mlr(x,y) to build our multiple linear regression function. We set our intercept equal to one, and set our X to be our intercept + predictors, and our y to be Risk Adjusted Rate. Finally, we printed our MLR coefficients and r-squared. (Rachel)
@@ -308,13 +292,22 @@ For models predicting risk adjusted rate, MLR performed poorly with a low rsq. T
 
 \section{Initial Results Analysis}
 
-The random forest and decision tree classifier models performed better than the KNN and MLR models. Regarding the KNN model, this one was not as ideal, though it has a high accuracy (0.93) due to the fact that the ideal k for minimizing test classification error was k=1. This model, therefore, is prone to overfitting. The model presenting these characteristics because the cleaned data set was large, clean, and lacked excessive noise. MLR performed poorly because a linear model simply failed to capture the variance in the data. The trends were more complex. The random forest model performed better because this model is non-linear and random forests account for more complex patterns. (Helen)
+The random forest and decision tree classifier models performed better than the KNN and MLR models. Regarding the KNN model, this model was not as ideal, though it has a high accuracy (0.93) due to the fact that the ideal k for minimizing test classification error was k=1. This model, therefore, is prone to overfitting. The model presenting these characteristics because the cleaned data set was large, clean, and lacked excessive noise. MLR performed poorly because a linear model simply failed to capture the variance in the data. The trends were more complex. The random forest model performed better because this model is non-linear and random forests account for more complex patterns. (Helen)
 
-Random forest was likely the best when it came to predicting hospital ratings as it takes multiple trees and has them “vote” on the outcome, so there are many more trees contributing to the results.
+The random forest was likely the best when it came to predicting hospital ratings, as it takes multiple trees and allows them to “vote” on the outcome, so there are many more trees contributing to the results.
 (Rachel)
 
-\section{Issues and Limitations}
-We had some limitations when it came to ensemble learning for random forest as our code kept throwing errors. However, we just needed to make small adjustments to how we one-hot encoded and the order of our code, and it eventually worked. 
+\section{Conclusion}
+\subsection{Summary}
+
+In this project, five total models were created to address the following questions: how can hospital ratings and risk adjusted rate be predicted based off predictor variables such as county, number of deaths/readmission, number of cases, etc. This question was split into two main objectives, the first predicting hospital ratings, and the second addressing risk adjusted rate. 
+
+To address these two questions, we 
+
+\subsection{Defense}
+\subsection{Future \& Additional Work}
+\subsection{Issues and Limitations}
+There were initially some complications with the random forest. To be more specific, when predicting hospital ratings with random forests, we needed to change the arc sin h. However, we were able to remedy this as we found a different code syntax in the classwork for random forest classifiers of categorical varaibles, which still produced a fantastic accuracy and used a standard 80/20 test train split. Repeated errors were corrected by making slight adjustments to the one-hot encoding and the order of the code. This resolved the errors. Further, we planned to transform the risk adjusted rate variable for multiple linear regression because it was skewed to the right. After multiple attempts at transformation, including log, sqrt, and cubed root, the r-squared only reached .02. We concluded that this model is not a good fit for our data.
 \section{Figures}
 
 \begin{figure}[H]  % note the capital H
