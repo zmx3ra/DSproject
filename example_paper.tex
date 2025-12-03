@@ -302,10 +302,15 @@ The random forest was likely the best when it came to predicting hospital rating
 
 In this project, five total models were created to address the following questions: how can hospital ratings and risk adjusted rate be predicted based off predictor variables such as county, number of deaths/readmission, number of cases, etc. This question was split into two main objectives, the first predicting hospital ratings, and the second addressing risk adjusted rate. 
 
-To address these two questions, we 
+To address the first question, a K Nearest Neighbor model was used and resulted in an accuracy of 0.93. The ideal K was 1, however, indicating that the model might be prone to overfitting. A Decision Tree Classifier was also used to address this question, and performed well while also being less prone to overfitting. A third model, a random forest, was also used and ended up with the highest accuracy other than the KNN model. Thus, for addressing this question, the random forest model was the best model for predicting Hospital Ratings based on this dataset. 
+
+To address the second question, a Random Forest model was used in addition to multipl linear regression. The MLR performs poorly as shown by the low r squared value. The random forest, similarly to the first question, proved to be the best model for predicting risk adjusted rate. 
 
 \subsection{Defense}
+
 \subsection{Future \& Additional Work}
+Future work related to hospital stats and ratings/risk adjusted rate outcomes should expand how many variables the model takes in. With a large dataset that includes multiple data points about a similar subject 
+
 \subsection{Issues and Limitations}
 There were initially some complications with the random forest. To be more specific, when predicting hospital ratings with random forests, we needed to change the arc sin h. However, we were able to remedy this as we found a different code syntax in the classwork for random forest classifiers of categorical varaibles, which still produced a fantastic accuracy and used a standard 80/20 test train split. Repeated errors were corrected by making slight adjustments to the one-hot encoding and the order of the code. This resolved the errors. Further, we planned to transform the risk adjusted rate variable for multiple linear regression because it was skewed to the right. After multiple attempts at transformation, including log, sqrt, and cubed root, the r-squared only reached .02. We concluded that this model is not a good fit for our data.
 \section{Figures}
