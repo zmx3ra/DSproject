@@ -304,15 +304,19 @@ In this project, five total models were created to address the following questio
 
 To address the first question, a K Nearest Neighbor model was used and resulted in an accuracy of 0.93. The ideal K was 1, however, indicating that the model might be prone to overfitting. A Decision Tree Classifier was also used to address this question, and performed well while also being less prone to overfitting. A third model, a random forest, was also used and ended up with the highest accuracy other than the KNN model. Thus, for addressing this question, the random forest model was the best model for predicting Hospital Ratings based on this dataset. 
 
-To address the second question, a Random Forest model was used in addition to multipl linear regression. The MLR performs poorly as shown by the low r squared value. The random forest, similarly to the first question, proved to be the best model for predicting risk adjusted rate. 
+To address the second question, a Random Forest model was used in addition to multipl linear regression. The MLR performs poorly as shown by the low r squared value. The random forest, similar to the first question, proved to be the best model to predict the risk adjusted rate. 
 
 \subsection{Defense}
 
 \subsection{Future \& Additional Work}
-Future work related to hospital stats and ratings/risk adjusted rate outcomes should expand how many variables the model takes in. With a large dataset that includes multiple data points about a similar subject 
+Future work related to hospital stats and rating /risk adjusted rate outcomes could expand the number of variables included. For example, hospital ratings could be further expanded to satisfaction with individual providers or satisfaction with divisions. More variables looking at similar questions would allow future work to conduct principal component analysis and potentially generate a more cohesive and effective prediction. 
+
+Future work could also analyze hospital ratings or risk adjusted rate over time in response to policies that effect hospital regulations. The data, as is, simply describes the current situation of hospitalizations within the five most populous counties in California. More data over time would create a more complex picture responding to current events. For example, legislation limiting the kinds of medications available, or medical care coverage would likely have an impact on hospitals satisfaction rates and risk adjusted rates over time. Work such as this would provide legislators with data regarding the impacts of the policies enacted, and provide more direction for moving forward. This would allow future work to be more socially engaged and provide more directive power for change on a broader institutional scale. 
+
+
 
 \subsection{Issues and Limitations}
-There were initially some complications with the random forest. To be more specific, when predicting hospital ratings with random forests, we needed to change the arc sin h. However, we were able to remedy this as we found a different code syntax in the classwork for random forest classifiers of categorical varaibles, which still produced a fantastic accuracy and used a standard 80/20 test train split. Repeated errors were corrected by making slight adjustments to the one-hot encoding and the order of the code. This resolved the errors. Further, we planned to transform the risk adjusted rate variable for multiple linear regression because it was skewed to the right. After multiple attempts at transformation, including log, sqrt, and cubed root, the r-squared only reached .02. We concluded that this model is not a good fit for our data.
+There were initially some complications with the random forest. To be more specific, when predicting hospital ratings with random forests, we needed to change the arc sin h. However, we were able to remedy this as we found a different code syntax in the classwork for random forest classifiers of categorical variables, which still produced a fantastic accuracy and used a standard 80/20 test train split. Repeated errors were corrected by making slight adjustments to the one-hot encoding and the order of the code. This resolved the errors. Further, we planned to transform the risk adjusted rate variable for multiple linear regression because it was skewed to the right. After multiple attempts at transformation, including log, sqrt, and cubed root, the r-squared only reached .02. We concluded that this model is not a good fit for our data.
 \section{Figures}
 
 \begin{figure}[H]  % note the capital H
