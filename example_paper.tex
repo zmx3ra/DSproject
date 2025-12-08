@@ -61,8 +61,8 @@
 \icmltitle{An Examination of Ischemic Stroke Data: Exploring Machine Learning Models to Predict Hospital Ratings and Risk Adjusted Rate. }
 
 \begin{icmlauthorlist}
-\icmlauthor{Rachel Kersey}{equal,yyy}
-\icmlauthor{Helen Sparling}{equal,yyy,comp}
+\icmlauthor{Rachel Kersey}{}
+\icmlauthor{Helen Sparling}{}
 \end{icmlauthorlist}
 
 \icmlkeywords{Machine Learning, ICML}
@@ -70,18 +70,15 @@
 \vskip 0.3in
 
 \begin{abstract}
-This paper examines the best machine learning models to use in our dataset of ischemic stroke. Specifically, we used four different machine learning models: decision tree classifier, random forest and k nearest neighbor to predict hospital ratings, and multiple linear regression/a separate random forest model to predict risk adjusted rate. The variety of models used gave a detailed picture of the models that performed best in predicting categorical and numeric variables. The results indicated that the best classification model for hospital ratings was the random forest model, as it produced an ensemble accuracy of 0.93. Further, the decision tree classifier also performed decently, giving an accuracy score of 0.92. For prediction of risk adjusted rate, the ensemble random forest also performed the best, producing a r-squared ensemble of 0.76. The multiple linear regression did not perform well whatsoever, with an r-squared of .005. Overall, this analysis gives a good idea of the best machine learning models to use when evaluating this dataset. 
+This paper examines the best machine learning models to use in a dataset about ischemic stroke. Specifically, we used four different machine learning models: decision tree classifier, random forest and k nearest neighbor to predict hospital ratings, and multiple linear regression/a separate random forest model to predict risk adjusted rate. The variety of models gave us a detailed picture of the models that performed best in predicting categorical and numeric variables -- specifically, hospital ratings and (categorical) and risk adjusted rate (numeric). The results indicated that the best classification model for hospital ratings was the random forest model, as it produced an ensemble accuracy of 0.93. Further, the decision tree classifier also performed decently, giving an accuracy score of 0.92. For prediction of risk adjusted rate, the ensemble random forest also performed the best, producing a r-squared ensemble of 0.76. The multiple linear regression did not perform well whatsoever, with an r-squared of .005. Overall, this analysis gives a good idea of the best machine learning models to use when evaluating this dataset and making predictions related to hospital ratings and risk adjusted rates. 
 \end{abstract}
 
 ]  % <-- end of the full-width block
 
-\section{Introduction}
-
-
 \section{Data}
 \label{submission}
 
-The data set used for this investigation is “Ischemic Stroke Mortality and Readmission Rates at 30-Days and Quality Ratings in CA Hospitals.” The dataset is from Data.gov, a reputable website that contains many different kinds of datasets across a range of topics. The hyperlink to the data set is given below. Simply put, this dataset contains information on risk-adjusted mortality and readmission rates at 30 days, as well as quality ratings and deaths/readmissions, for Ischemic Strokes treated in hospitals throughout the state of California. Importantly, the risk-adjusted 30 day mortality examines mortality rates for each datapoint as adjusted for the severity of the individuals condition (risk adjusted). This dataset is important as it shows how hospital ratings are related to stroke readmissions and deaths: and machine learning models predicting these variables could demonstrate the need for hospitals to increase their ratings in order to lower readmission or death rates. The URL is available here:
+The data set used for this investigation is “Ischemic Stroke Mortality and Readmission Rates at 30-Days and Quality Ratings in CA Hospitals.” The dataset is from Data.gov, a reputable website that contains many different kinds of datasets across a range of topics. The hyperlink to the data set is given below. Simply put, this dataset contains information on risk-adjusted mortality and readmission rates at 30 days, as well as quality ratings and deaths/readmissions for Ischemic Strokes treated in hospitals throughout the state of California. Importantly, the risk-adjusted 30 day mortality examines mortality rates for each datapoint as adjusted for the severity of the individuals condition (risk adjusted). This dataset is important as it shows how hospital ratings are related to stroke readmissions and deaths: and machine learning models predicting these variables could demonstrate the need for hospitals to increase their ratings in order to lower readmission or death rates. The URL is available here:
 
 \begin{center}
 \textbf{\href{https://catalog.data.gov/dataset/ischemic-stroke-30-day-mortality-and-30-day-readmission-rates-and-quality-ratings-for-ca-h-92036}{Stroke Dataset Link}}
@@ -89,7 +86,7 @@ The data set used for this investigation is “Ischemic Stroke Mortality and Rea
 
 
 
-The dataset contained a total of 9 variables, 5 of which were numeric, and 4 of which were categorical. Prior to analysis, the data was subsetted to include only the five most populous counties in the state of California. The breakdown of each variable is as follows:
+The dataset contained a total of 9 variables, 5 of which were numeric, and 4 of which were categorical. Prior to analysis, the data was subsetted to include only the five most populous counties in the state of California in order to make the dataset more manageable. The breakdown of each variable is as follows:
 \begin{itemize}
 \item Year: quantitative discrete, year data was recorded\@. 
 \item County: categorical, county data was recorded in.
@@ -139,11 +136,11 @@ The dataset contained a total of 9 variables, 5 of which were numeric, and 4 of 
 %results. This program avoids the Type-3 font problem, and supports more
 %advanced features in the \texttt{microtype} package.
 
-\textbf{Data Quality Notes:} The data had missing values that would cause problems moving into analysis and model construction. In order to address this issue, the missing values were replaced with np.Nan so no additional cleaning was needed. Missing data was aimed to not be deleted as that would have potentially skewed the results of later analysis and model construction. However, later on in the study, some models were giving errors due to the np.Nan, so we were forced to remove the rows that contained missing data. There were not many of these rows though, so we were still able to use models on a large portion of our data.
+\textbf{Data Quality Notes:} The data had missing values that would cause problems moving into analysis and model construction. In order to address this issue, the missing values were replaced with np.Nan so no additional cleaning was needed. We did not delete missing data so as to not potentially skew end results in later analysis, as well as in model construction. However, later on in the study, some models produced errors after running due to the np.Nan, so we were forced to remove the rows that contained missing data. The number of rows that fell into this category were few, however, and we were still able to use our models on a large portion of our data. The impacts of these deletions should be negligible.
 
-Data cleaning included: coercing columns with periods to numeric as a precaution using pd.to\_numeric(), removing unnecessary wording changing "30-day Readmission" to "Readmission" using the .str.replace(), splitting the year column to change the format from "2011-2012" to "2011", and changing the year column to numeric using the pd.to\_numeric(). Changing the year column required a few steps. The year column was split at the "-" character using the .st.split() function. Then, as only the start year was needed, not the end year, the first part of the resulting string was selected and kept in a new column, and the old column was deleted. This method was slightly more complex than likely necessary, but it was successful in the end and resulted in a "Year" column that was ready for analysis, visualization, and model construction. Together, all of the changes changes made data visualization simpler. Additionally, as there were no unnecessary dollar signs, commas, or other characters, no other substantial cleaning was necessary. 
+Data cleaning included: coercing columns with periods to numeric as a precaution using pd.to\_numeric(), removing unnecessary wording changing ``30-day Readmission'' to ``Readmission'' using the .str.replace(), splitting the year column to change the format from ``2011-2012'' to ``2011'', and changing the year column to numeric using the pd.to\_numeric(). Changing the year column required a few steps. The year column was split at the ``-'' character using the .st.split() function. Then, as only the start year was needed, not the end year, the first part of the resulting string was selected and kept in a new column, and the old column was deleted. This method was slightly more cumbersome than likely necessary, but it was successful in the end and resulted in a "Year" column that was ready for analysis, visualization, and model construction. Together, all of the changes made data visualization simpler. Additionally, there were no unnecessary dollar signs, commas, or other characters, so no other substantial cleaning was necessary. 
 
-As the original dataset was quite large and in order to simplify analysis to further focus the research question, a subset of the dataset including the 5 most populated counties was selected. The location column contained information about the coordinate points of each data entry. The dataset, however, already contained a different column concerning location in terms of County. County is a far more understandable variable to work with compared to coordinates points. Thus, we removed the "location" column as the information was unhelpful and redundant. (Helen Sparling)
+As the original dataset was quite large and in order to simplify analysis to further focus the research question, a subset of the dataset including the 5 most populated counties was selected. The location column contained information about the coordinate points of each data entry. The dataset, however, already contained a different column concerning location in terms of County. County is a far more understandable variable to work with compared to coordinates points. Thus, we removed the ``location" column as the information was unhelpful and redundant. (Helen Sparling)
 
 
 There are some outliers in the dataset. Boxplots were made for the three numeric variables: risk adjusted rate, number of cases, and number of deaths/readmissions. All of these variables were right skewed. Future steps will involve transformations to attempt to fix the data.(Rachel Kersey)
@@ -232,7 +229,7 @@ We used random forests for classification on hospital ratings. This did include 
 
 \textbf{Feature Selection}: The features we used to build our model were 'Risk Adjusted Rate', '\# of Deaths/Readmissions', "\# of Cases", "Year", "County", "Hospital",  and "Measure" if we were predicting hospital ratings. We used these measures as we saw some interesting relationships in our preliminary graphs and wanted to thus incorporate these variables into the model. For our models where we predicted risk adjusted rate, in the random forest ensemble (for risk adjusted rate), we used all of our variables in our dataset because we were curious how keeping them all in would affect ensemble rsq. The features we used in our MLR model included all of our numeric variables, except for risk adjusted rate, which was our target. (Rachel)
 
-\section{Evaluation Benchmark}
+\section{Results: Evaluation Benchmark}
 
 \subsection{Metrics Used}
 \textbf{Accuracy}:
