@@ -7,7 +7,7 @@
 \usepackage{booktabs} 
 \usepackage[hyphens]{url}
 \usepackage{hyperref}
-
+\usepackage{graphicx}
 % for professional tables
 
 % hyperref makes hyperlinks in the resulting PDF.
@@ -277,16 +277,17 @@ The accuracy for our random forest (hospital ratings) model was 0.926. (Rachel)
 \end{table}
 (Rachel)
 \vspace{0.3cm}
+
 \textbf{R-squared}: Our ensemble rsq for the ensemble random forest was 0.76, and our rsq for MLR was 0.0056.
 (Helen and Rachel)
-\usepackage{graphicx} % in preamble
+
 
 
 \subsection{Model comparison}
 The KNN model had the best accuracy. As aforementioned, however, the k value with the least test classification error was 1, which makes this model more prone to overfitting. For predicting risk adjusted rate, random forest has a far better r-squared value compared to the multiple linear regression model (0.76 and 0.0056, respectively). (Helen)
 
 \subsection{Initial Results and Comparison}
-\textbf{Interpretation of which model performed best}:For models predicting hospital ratings, k nearest neighbors performed the best in regards to accuracy, but the decision tree classifier accuracy was very close to k nearest neighbors. In addition, the decision tree classifier is less prone to overfitting vs. the k nearest neighbors because our optimal k is 1 for the KNN. Further, from our random forest model, we had an accuracy of 0.926, which was higher than the decision tree classifier, and therefore our best model.
+\textbf{Interpretation of which model performed best}:For models predicting hospital ratings, k nearest neighbors performed the best in regards to accuracy, but the decision tree classifier accuracy was very close to k nearest neighbors. In addition, the decision tree classifier is less prone to overfitting compared to the k nearest neighbors because our optimal k is 1 for the KNN. Further, from our random forest model, we had an accuracy of 0.926, which was higher than the decision tree classifier, and therefore our best model.
 
 For models predicting risk adjusted rate, MLR performed poorly with a low rsq. The random forest performed better with a significantly higher rsq. 
 
@@ -304,7 +305,7 @@ In this project, five total models were created to address the following questio
 
 To address the first question, a K Nearest Neighbor model was used and resulted in an accuracy of 0.93. The ideal K was 1, however, indicating that the model might be prone to overfitting. A Decision Tree Classifier was also used to address this question, and performed well while also being less prone to overfitting. A third model, a random forest, was also used and ended up with the highest accuracy other than the KNN model. Thus, for addressing this question, the random forest model was the best model for predicting Hospital Ratings based on this dataset. 
 
-To address the second question, a Random Forest model was used in addition to multipl linear regression. The MLR performs poorly as shown by the low r squared value. The random forest, similar to the first question, proved to be the best model to predict the risk adjusted rate. 
+To address the second question, a Random Forest model was used in addition to multiple linear regression. The MLR performs poorly as shown by the low r squared value. The random forest, similar to the first question, proved to be the best model to predict the risk adjusted rate. 
 
 \subsection{Defense}
 
