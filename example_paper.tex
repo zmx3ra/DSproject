@@ -4,7 +4,11 @@
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{subfigure}
-\usepackage{booktabs} % for professional tables
+\usepackage{booktabs} 
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+% for professional tables
 
 % hyperref makes hyperlinks in the resulting PDF.
 % If your build breaks (sometimes temporarily if a hyperlink spans a page)
@@ -332,12 +336,10 @@ There were initially some complications with the random forest. To be more speci
 
 
 
-
-
-\nocite{langley00}
-
-\bibliography{example_paper}
 \bibliographystyle{icml2025}
+\bibliography{example_paper}
+\cite{HCAI2025_StrokeDataset}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
